@@ -3,6 +3,79 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckIcon } from "./icons";
+import { Check } from "lucide-react";
+// Robust custom syntax highlighter (no libraries)
+function highlightJS(code: string): string {
+  code = code
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  const rules = {
+    comment: /(\/\/.*|\/\*[\s\S]*?\*\/)/g,
+    string:
+      /('[^'\\]*(?:\\.[^'\\]*)*'|"[^"\\]*(?:\\.[^"\\]*)*"|`[^`\\]*(?:\\.[^`\\]*)*`)/g,
+    keyword:
+      /\b(const|let|var|function|return|if|else|for|while|do|switch|case|break|continue|try|catch|finally|throw|new|typeof|instanceof|in|of|await|async|import|from|export|default|extends|class|super|this)\b/g,
+    number: /\b(\d+(\.\d+)?|0x[a-fA-F0-9]+|0b[01]+|0o[0-7]+)\b/g,
+    boolean: /\b(true|false|null|undefined)\b/g,
+    function: /\b([A-Za-z_][A-Za-z0-9_]*)\s*(?=\()/g,
+    property: /([a-zA-Z_][a-zA-Z0-9_]*)(?=\s*:)/g,
+    punctuation: /([{}\[\]();,.:])/g,
+  };
+
+  const tokens: { type: string; content: string; index: number }[] = [];
+
+  // Tokenize
+  for (const type in rules) {
+    for (const match of code.matchAll(rules[type as keyof typeof rules])) {
+      tokens.push({ type, content: match[0], index: match.index! });
+    }
+  }
+
+  // Sort tokens by index and handle overlaps
+  tokens.sort((a, b) => a.index - b.index);
+  const finalTokens: { type: string; content: string }[] = [];
+  let lastIndex = 0;
+
+  for (const token of tokens) {
+    if (token.index < lastIndex) continue; // Skip overlapping tokens
+
+    // Add un-highlighted text
+    if (token.index > lastIndex) {
+      finalTokens.push({
+        type: "default",
+        content: code.substring(lastIndex, token.index),
+      });
+    }
+
+    finalTokens.push({ type: token.type, content: token.content });
+    lastIndex = token.index + token.content.length;
+  }
+
+  // Add remaining text
+  if (lastIndex < code.length) {
+    finalTokens.push({ type: "default", content: code.substring(lastIndex) });
+  }
+
+  // Build HTML
+  return finalTokens
+    .map((token) => {
+      const className = {
+        comment: "text-gray-500 italic",
+        string: "text-green-400",
+        keyword: "text-purple-400 font-medium",
+        number: "text-orange-400",
+        boolean: "text-red-400",
+        function: "text-yellow-300",
+        property: "text-cyan-300",
+        punctuation: "text-gray-300",
+        default: "text-gray-300",
+      }[token.type];
+      return `<span class="${className}">${token.content}</span>`;
+    })
+    .join("");
+}
 
 interface TabData {
   id: string;
@@ -203,36 +276,15 @@ export function FinancialPrimitivesSection() {
   const activeTabData =
     tabsData.find((tab) => tab.id === activeTab) || tabsData[0];
 
-  const highlightCode = (code: string) => {
-    return code
-      .replace(
-        /\b(await|const|let|var|function|return|if|else|for|while|try|catch)\b(?![^<]*>)/g,
-        '<span class="text-purple-400 font-medium">$1</span>'
-      )
-      .replace(
-        /\b(indrapay)\./g,
-        '<span class="text-blue-400 font-medium">$1</span><span class="text-gray-300">.</span>'
-      )
-      .replace(
-        /\.(create|convert|screen|route|createBatch)\(/g,
-        '<span class="text-gray-300">.</span><span class="text-yellow-400 font-medium">$1</span><span class="text-gray-300">(</span>'
-      )
-      .replace(/"([^"]+)"/g, '<span class="text-green-400">"$1"</span>')
-      .replace(/(\/\/.*$)/gm, '<span class="text-gray-500 italic">$1</span>')
-      .replace(
-        /([a-zA-Z_][a-zA-Z0-9_]*)\s*:/g,
-        '<span class="text-cyan-300">$1</span><span class="text-gray-300">:</span>'
-      )
-      .replace(/\{/g, '<span class="text-gray-300">{</span>')
-      .replace(/\}/g, '<span class="text-gray-300">}</span>')
-      .replace(/\[/g, '<span class="text-gray-300">[</span>')
-      .replace(/\]/g, '<span class="text-gray-300">]</span>')
-      .replace(/,/g, '<span class="text-gray-300">,</span>')
-      .replace(/;/g, '<span class="text-gray-300">;</span>');
-  };
-
   return (
-    <section className="py-20 md:py-28 bg-slate-900">
+    <section
+      className="py-20 md:py-28 bg-slate-900 relative overflow-hidden"
+      style={{
+        backgroundImage:
+          "repeating-linear-gradient(to right, rgba(100,116,139,0.12) 0, rgba(100,116,139,0.12) 1px, transparent 1px, transparent 40px), repeating-linear-gradient(to bottom, rgba(100,116,139,0.12) 0, rgba(100,116,139,0.12) 1px, transparent 1px, transparent 40px)",
+        backgroundSize: "40px 40px",
+      }}
+    >
       <div className="container mx-auto px-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
@@ -252,9 +304,9 @@ export function FinancialPrimitivesSection() {
           {/* Main Content Grid */}
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Left Side - Tabs */}
-            <div className="space-y-3">
+            <div className="space-y-1">
               {tabsData.map((tab) => (
-                <motion.button
+                <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`w-full text-left px-6 py-4 rounded-lg transition-all duration-200 ${
@@ -262,42 +314,10 @@ export function FinancialPrimitivesSection() {
                       ? "bg-teal-500 text-white font-medium shadow-lg shadow-teal-500/25"
                       : "text-gray-400 hover:text-white hover:bg-slate-800/50"
                   }`}
-                  whileHover={{ scale: activeTab === tab.id ? 1 : 1.02 }}
-                  whileTap={{ scale: 0.98 }}
                 >
                   {tab.title}
-                </motion.button>
+                </button>
               ))}
-
-              {/* Documentation Link */}
-              <div className="pt-8">
-                <motion.a
-                  href="/docs"
-                  className="flex items-center justify-between w-full px-6 py-4 border border-slate-700 rounded-lg text-white hover:border-teal-500 transition-colors group"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="flex items-center space-x-3">
-                    <div className="w-5 h-5 border border-current rounded flex items-center justify-center">
-                      <div className="w-2 h-2 bg-current rounded-sm" />
-                    </div>
-                    <span className="font-medium">Read our documentation</span>
-                  </div>
-                  <svg
-                    className="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </motion.a>
-              </div>
             </div>
 
             {/* Right Side - Code and Features */}
@@ -320,21 +340,13 @@ export function FinancialPrimitivesSection() {
                       indrapay-api.js
                     </span>
                   </div>
-                  <pre className="text-sm overflow-x-auto font-mono">
-                    <code className="text-gray-300">
-                      {activeTabData.code.split("\n").map((line, index) => (
-                        <div key={index} className="flex font-firaCode">
-                          <span className="text-gray-600 mr-4 select-none w-6 text-right font-mono">
-                            {index + 1}
-                          </span>
-                          <span
-                            dangerouslySetInnerHTML={{
-                              __html: highlightCode(line),
-                            }}
-                          />
-                        </div>
-                      ))}
-                    </code>
+                  <pre className="text-sm overflow-x-auto ">
+                    <code
+                      className="text-gray-300 !font-firaCode"
+                      dangerouslySetInnerHTML={{
+                        __html: highlightJS(activeTabData.code),
+                      }}
+                    />
                   </pre>
                 </motion.div>
               </AnimatePresence>
@@ -362,7 +374,7 @@ export function FinancialPrimitivesSection() {
                         className="flex items-center text-gray-300"
                       >
                         <div className="w-5 h-5 rounded-full bg-teal-500/20 flex items-center justify-center mr-3 flex-shrink-0">
-                          <CheckIcon />
+                          <Check size={13} />
                         </div>
                         {feature}
                       </motion.li>
@@ -370,10 +382,9 @@ export function FinancialPrimitivesSection() {
                   </ul>
 
                   <div className="mt-6">
-                    <motion.a
+                    <a
                       href="/docs"
-                      className="inline-flex items-center text-teal-400 hover:text-teal-300 transition-colors group font-medium"
-                      whileHover={{ x: 5 }}
+                      className="inline-flex items-center bg-slate-100/5 hover:bg-slate-100/10 transition-colors group font-medium px-4 py-2 rounded-md"
                     >
                       <span>Read our documentation</span>
                       <svg
@@ -389,7 +400,7 @@ export function FinancialPrimitivesSection() {
                           d="M9 5l7 7-7 7"
                         />
                       </svg>
-                    </motion.a>
+                    </a>
                   </div>
                 </motion.div>
               </AnimatePresence>

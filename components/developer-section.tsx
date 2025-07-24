@@ -44,9 +44,9 @@ export function DeveloperSection(): JSX.Element {
               transition={{ duration: 0.3 }}
             >
               <pre className="text-sm overflow-x-auto">
-                <code>
+                <code className="!font-firaCode">
                   <motion.span
-                    className="text-purple-400"
+                    className="text-purple-400 "
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ delay: 0.5 }}
