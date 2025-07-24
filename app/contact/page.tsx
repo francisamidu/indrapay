@@ -5,6 +5,7 @@ import type React from "react";
 import { JSX, useState } from "react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { Button } from "@/components/ui/button";
 
 interface ContactForm {
   name: string;
@@ -274,13 +275,9 @@ export default function ContactPage(): JSX.Element {
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-teal-500 text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:bg-teal-600 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
+                <Button className="block w-full">
                   {isSubmitting ? "Sending..." : "Send Message"}
-                </button>
+                </Button>
               </form>
             </div>
           </div>

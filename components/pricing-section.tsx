@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
 import { ScrollReveal } from "./animated/scroll-reveal";
 import { scaleIn, pulse } from "../lib/animations";
 import { JSX } from "react";
-import { Link } from "lucide-react";
+import Link from "next/link";
 
 export function PricingSection(): JSX.Element {
   return (

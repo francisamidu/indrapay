@@ -29,7 +29,7 @@ function FeatureCard({ icon, title, children }: FeatureCardProps) {
 
 export function FeaturesSection(): JSX.Element {
   return (
-    <section id="solutions" className="py-20 md:py-28 bg-slate-800/50">
+    <section id="solutions" className="py-20 md:py-28 !bg-slate-800/50 z-20">
       <div className="container mx-auto px-6">
         <ScrollReveal>
           <div className="text-center mb-16">

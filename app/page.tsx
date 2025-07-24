@@ -1,15 +1,16 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Header } from "../components/header"
-import { HeroSection } from "../components/hero-section"
-import { SocialProof } from "../components/social-proof"
-import { FeaturesSection } from "../components/features-section"
-import { DeveloperSection } from "../components/developer-section"
-import { PricingSection } from "../components/pricing-section"
-import { FinalCTA } from "../components/final-cta"
-import { Footer } from "../components/footer"
-import type { JSX } from "react" // Declare JSX variable
+import { motion } from "framer-motion";
+import { Header } from "../components/header";
+import HeroSection from "../components/hero-section";
+import { SocialProof } from "../components/social-proof";
+import { FeaturesSection } from "../components/features-section";
+import { DeveloperSection } from "../components/developer-section";
+import { PricingSection } from "../components/pricing-section";
+import { FinalCTA } from "../components/final-cta";
+import { Footer } from "../components/footer";
+import type { JSX } from "react"; // Declare JSX variable
+import { FinancialPrimitivesSection } from "@/components/financial-primitives-section";
 
 export default function HomePage(): JSX.Element {
   return (
@@ -25,10 +26,11 @@ export default function HomePage(): JSX.Element {
         <SocialProof />
         <FeaturesSection />
         <DeveloperSection />
+        <FinancialPrimitivesSection />
         <PricingSection />
         <FinalCTA />
       </main>
       <Footer />
     </motion.div>
-  )
+  );
 }

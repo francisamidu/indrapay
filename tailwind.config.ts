@@ -14,7 +14,8 @@ const config: Config = {
     extend: {
       fontFamily: {
         inter: ["var(--font-inter)"], // Map 'font-inter' utility to the CSS variable
-        jakarta: ["var(--font-plus-jakarta-sans)"], // Map 'font-jakarta' utility to the CSS variable
+        jakarta: ["var(--font-plus-jakarta-sans)"], // Map 'font-jakarta' utility to the CSS variable,
+        firaCode: ["var(--font-fira-code)"], // Map 'font-fira-code' utility to the CSS variable
       },
       colors: {
         background: "hsl(var(--background))",

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Fira_Code, Inter, Plus_Jakarta_Sans } from "next/font/google";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -11,6 +11,13 @@ const inter = Inter({
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-plus-jakarta-sans", // Define a CSS variable for Plus Jakarta Sans
+  display: "swap",
+});
+
+const firaCode = Fira_Code({
+  subsets: ["latin"],
+  variable: "--font-fira-code", // Define a CSS variable for Fira Code
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -28,7 +35,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={` ${inter.variable} ${plusJakartaSans.variable}`}
+      className={` ${inter.variable} ${plusJakartaSans.variable} ${firaCode.variable}`}
     >
       <body className="font-inter overflow-x-hidden">{children}</body>
     </html>

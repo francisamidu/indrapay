@@ -12,7 +12,7 @@ export function Header(): JSX.Element {
 
   return (
     <motion.header
-      className="bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50"
+      className="bg-transparent backdrop-blur-sm sticky top-0 z-50"
       variants={slideInFromTop}
       initial="hidden"
       animate="visible"
