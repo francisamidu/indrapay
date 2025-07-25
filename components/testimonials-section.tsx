@@ -6,6 +6,7 @@ import { staggerContainer, staggerItem } from "../lib/animations";
 import Link from "next/link";
 import { Marquee } from "@/components/marquee";
 import { AnimatedCount } from "@/components/animated-count";
+import { Button } from "./ui/button";
 
 interface Testimonial {
   id: string;
@@ -164,43 +165,71 @@ export function TestimonialsSection() {
       <div className="pointer-events-none absolute inset-0 z-0">
         {/* Large Quotes SVGs */}
         <motion.svg
-          width="120" height="120"
+          width="120"
+          height="120"
           className="absolute left-8 top-8 opacity-20 text-teal-400"
           aria-hidden="true"
           animate={{ scale: [1, 1.1, 1], rotate: [0, 5, 0] }}
-          transition={{ duration: 10, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            repeatType: "mirror",
+            ease: "easeInOut",
+          }}
         >
-          <text x="0" y="100" fontSize="120" fontWeight="bold" fill="currentColor">“</text>
+          <text
+            x="0"
+            y="100"
+            fontSize="120"
+            fontWeight="bold"
+            fill="currentColor"
+          >
+            “
+          </text>
         </motion.svg>
         <motion.svg
-          width="120" height="120"
+          width="120"
+          height="120"
           className="absolute right-8 bottom-8 opacity-20 text-blue-400"
           aria-hidden="true"
           animate={{ scale: [1, 1.08, 1], rotate: [0, -6, 0] }}
-          transition={{ duration: 12, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            repeatType: "mirror",
+            ease: "easeInOut",
+          }}
         >
-          <text x="0" y="100" fontSize="120" fontWeight="bold" fill="currentColor">”</text>
+          <text
+            x="0"
+            y="100"
+            fontSize="120"
+            fontWeight="bold"
+            fill="currentColor"
+          >
+            ”
+          </text>
         </motion.svg>
         {/* Faces Collage */}
         <div className="absolute inset-0 flex flex-wrap justify-center items-center gap-8 opacity-30">
           {/* Use testimonial avatars, repeat and scatter for effect */}
-          {testimonials.concat(testimonials.slice(0,3)).map((t, i) => {
+          {testimonials.concat(testimonials.slice(0, 3)).map((t, i) => {
             // Each face floats in a slightly different looping pattern
-            const floatX = (i % 3 === 0 ? 10 : i % 3 === 1 ? -8 : 0);
-            const floatY = (i % 2 === 0 ? 8 : -8);
+            const floatX = i % 3 === 0 ? 10 : i % 3 === 1 ? -8 : 0;
+            const floatY = i % 2 === 0 ? 8 : -8;
             return (
               <motion.img
-                key={t.id + '-bg-' + i}
+                key={t.id + "-bg-" + i}
                 src={t.author.avatar}
                 alt={t.author.name}
                 className={
                   `w-16 h-16 rounded-full object-cover grayscale blur-sm border-2 border-white/10 shadow-lg ` +
-                  (i % 2 === 0 ? 'translate-y-2' : '-translate-y-4')
+                  (i % 2 === 0 ? "translate-y-2" : "-translate-y-4")
                 }
                 style={{
-                  position: 'absolute',
-                  left: `${10 + (i * 12) % 80}%`,
-                  top: `${15 + (i * 18) % 60}%`,
+                  position: "absolute",
+                  left: `${10 + ((i * 12) % 80)}%`,
+                  top: `${15 + ((i * 18) % 60)}%`,
                   zIndex: 0,
                 }}
                 animate={{
@@ -210,8 +239,8 @@ export function TestimonialsSection() {
                 transition={{
                   duration: 16 + (i % 5),
                   repeat: Infinity,
-                  repeatType: 'mirror',
-                  ease: 'easeInOut',
+                  repeatType: "mirror",
+                  ease: "easeInOut",
                   delay: i * 0.7,
                 }}
               />
@@ -264,7 +293,10 @@ export function TestimonialsSection() {
             {/* Marquee Row 1: right-to-left */}
             <Marquee direction="left">
               {testimonials.concat(testimonials).map((testimonial, i) => (
-                <div key={testimonial.id + '-marquee1-' + i} className="mx-4 w-96 max-w-full inline-block align-top">
+                <div
+                  key={testimonial.id + "-marquee1-" + i}
+                  className="mx-4 w-96 max-w-full inline-block align-top"
+                >
                   <TestimonialCard testimonial={testimonial} index={i} />
                 </div>
               ))}
@@ -272,7 +304,10 @@ export function TestimonialsSection() {
             {/* Marquee Row 2: left-to-right */}
             <Marquee direction="right">
               {testimonials.concat(testimonials).map((testimonial, i) => (
-                <div key={testimonial.id + '-marquee2-' + i} className="mx-4 w-96 max-w-full inline-block align-top">
+                <div
+                  key={testimonial.id + "-marquee2-" + i}
+                  className="mx-4 w-96 max-w-full inline-block align-top"
+                >
                   <TestimonialCard testimonial={testimonial} index={i} />
                 </div>
               ))}
@@ -291,7 +326,13 @@ export function TestimonialsSection() {
               >
                 <motion.div variants={staggerItem}>
                   <div className="text-4xl font-bold text-teal-400 mb-2">
-                    <AnimatedCount to={2.5} decimals={1} duration={1.5} prefix="$" suffix="B+" />
+                    <AnimatedCount
+                      to={2.5}
+                      decimals={1}
+                      duration={1.5}
+                      prefix="$"
+                      suffix="B+"
+                    />
                   </div>
                   <div className="text-gray-400">Processed annually</div>
                 </motion.div>
@@ -303,7 +344,12 @@ export function TestimonialsSection() {
                 </motion.div>
                 <motion.div variants={staggerItem}>
                   <div className="text-4xl font-bold text-teal-400 mb-2">
-                    <AnimatedCount to={99.9} decimals={1} duration={1.2} suffix="%" />
+                    <AnimatedCount
+                      to={99.9}
+                      decimals={1}
+                      duration={1.2}
+                      suffix="%"
+                    />
                   </div>
                   <div className="text-gray-400">Uptime guarantee</div>
                 </motion.div>
@@ -325,25 +371,24 @@ export function TestimonialsSection() {
                 whileTap={{ scale: 0.95 }}
                 className="inline-block"
               >
-                <Link
-                  href="/signup"
-                  className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-teal-600 to-teal-500 text-white font-semibold rounded-xl hover:from-teal-500 hover:to-teal-400 transition-all duration-300 shadow-lg hover:shadow-teal-500/25"
-                >
-                  Join thousands of satisfied customers
-                  <svg
-                    className="w-5 h-5 ml-2"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
-                </Link>
+                <Button asChild>
+                  <Link href="/signup">
+                    Join thousands of satisfied customers
+                    <svg
+                      className="w-5 h-5 ml-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </Link>
+                </Button>
               </motion.div>
             </div>
           </ScrollReveal>
