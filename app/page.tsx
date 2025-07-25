@@ -11,6 +11,7 @@ import { FinalCTA } from "../components/final-cta";
 import { Footer } from "../components/footer";
 import type { JSX } from "react"; // Declare JSX variable
 import { FinancialPrimitivesSection } from "@/components/financial-primitives-section";
+import { TestimonialsSection } from "@/components/testimonials-section";
 
 export default function HomePage(): JSX.Element {
   return (
@@ -27,6 +28,7 @@ export default function HomePage(): JSX.Element {
         <FeaturesSection />
         <DeveloperSection />
         <FinancialPrimitivesSection />
+        <TestimonialsSection />
         <PricingSection />
         <FinalCTA />
       </main>
