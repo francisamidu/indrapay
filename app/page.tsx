@@ -1,5 +1,3 @@
-"use client";
-
 import type { JSX } from "react";
 import { motion } from "framer-motion";
 import { Header } from "@/components/header";
@@ -14,14 +12,17 @@ import { FinancialPrimitivesSection } from "@/components/financial-primitives-se
 import { TestimonialsSection } from "@/components/testimonials-section";
 import { WhyIndrapaySection } from "@/components/why-indrapay-section";
 
+import { withTitle, META_DESCRIPTION } from "./metadata";
+import { HomeAnimated } from "@/components/animated/home-animated";
+
+export const metadata = {
+  title: withTitle("Home"),
+  description: META_DESCRIPTION,
+};
+
 export default function HomePage(): JSX.Element {
   return (
-    <motion.div
-      className="bg-slate-900 text-gray-300 antialiased"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
+    <HomeAnimated>
       <Header />
       <main>
         <HeroSection />
@@ -35,6 +36,6 @@ export default function HomePage(): JSX.Element {
         <FinalCTA />
       </main>
       <Footer />
-    </motion.div>
+    </HomeAnimated>
   );
 }

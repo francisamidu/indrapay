@@ -4,26 +4,28 @@ import { Fira_Code, Inter, Plus_Jakarta_Sans } from "next/font/google";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter", // Define a CSS variable for Inter
+  variable: "--font-inter",
   display: "swap",
 });
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-plus-jakarta-sans", // Define a CSS variable for Plus Jakarta Sans
+  variable: "--font-plus-jakarta-sans",
   display: "swap",
 });
 
 const firaCode = Fira_Code({
   subsets: ["latin"],
-  variable: "--font-fira-code", // Define a CSS variable for Fira Code
+  variable: "--font-fira-code",
   weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
+const description = "Cross-border payment for African businesses";
+
 export const metadata: Metadata = {
-  title: "Indrapay",
-  description: "Cross-border payment for African businesses",
+  title: `Indrapay - ${description}`,
+  description,
 };
 
 export default function RootLayout({
