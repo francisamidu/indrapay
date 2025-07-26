@@ -62,7 +62,7 @@ export function Header(): JSX.Element {
         >
           <motion.div whileHover={{ scale: 1.05 }}>
             <Link
-              href="/signin"
+              href="/sign-in"
               className="text-white font-medium hover:text-gray-200 transition-colors"
             >
               Sign In
@@ -70,7 +70,7 @@ export function Header(): JSX.Element {
           </motion.div>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Button variant="default" className="px-4 py-2" asChild>
-              <Link href="/signup">Create Account</Link>
+              <Link href="/sign-up">Create Account</Link>
             </Button>
           </motion.div>
         </motion.div>
