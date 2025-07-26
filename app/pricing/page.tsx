@@ -3,7 +3,7 @@ import { Footer } from "@/components/footer";
 import { CheckIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { JSX } from "react";
-import { Link } from "@radix-ui/react-navigation-menu";
+import Link from "next/link";
 
 interface PricingTier {
   name: string;
@@ -95,7 +95,7 @@ export default function PricingPage(): JSX.Element {
               {pricingTiers.map((tier, index) => (
                 <div
                   key={index}
-                  className={`bg-slate-900 p-8 rounded-2xl border ${
+                  className={`bg-slate-900 p-8 flex flex-col justify-between rounded-2xl border ${
                     tier.popular
                       ? "border-teal-500 relative"
                       : "border-slate-800"

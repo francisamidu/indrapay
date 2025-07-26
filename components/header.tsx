@@ -33,9 +33,9 @@ export function Header(): JSX.Element {
         <div className="hidden md:flex items-center space-x-8">
           {[
             { href: "#solutions", label: "Solutions" },
-            { href: "#pricing", label: "Pricing" },
-            { href: "#developers", label: "Developers" },
-            { href: "#about", label: "About" },
+            { href: "/pricing", label: "Pricing" },
+            { href: "/developers", label: "Developers" },
+            { href: "/about", label: "About" },
           ].map((item, index) => (
             <motion.div
               key={item.href}

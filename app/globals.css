@@ -16,6 +16,9 @@
   --font-sans: var(--font-inter);
   --font-mono: var(--font-plus-jakarta-sans);
 }
+html{
+  scroll-behavior: smooth;
+}
 
 @layer base {
   :root {

@@ -205,6 +205,7 @@ export const SignIn = () => {
                             value={field.state.value}
                             onChange={(e) => field.handleChange(e.target.value)}
                             className={`w-full px-4 py-3 bg-slate-700 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-teal-500 transition-colors ${
+                              field.state.meta.isDirty &&
                               field.state.meta.errors
                                 ? "border-red-500"
                                 : "border-slate-600"
@@ -253,6 +254,7 @@ export const SignIn = () => {
                             value={field.state.value}
                             onChange={(e) => field.handleChange(e.target.value)}
                             className={`w-full px-4 py-3 bg-slate-700 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-teal-500 transition-colors ${
+                              field.state.meta.isDirty &&
                               field.state.meta.errors
                                 ? "border-red-500"
                                 : "border-slate-600"
