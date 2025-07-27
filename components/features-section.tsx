@@ -1,17 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { FeatureCardProps } from "../types";
 import { FeatureIcon1, FeatureIcon2, FeatureIcon3 } from "./icons";
 import { ScrollReveal } from "./animated/scroll-reveal";
-import { staggerContainer, staggerItem, hoverLift } from "../lib/animations";
+import { staggerContainer, staggerItem, hoverLift } from "@/lib/animations";
 import { JSX } from "react";
 
+type FeatureCardProps = {
+  icon: React.ReactNode;
+  title: string;
+  children: React.ReactNode;
+};
 function FeatureCard({ icon, title, children }: FeatureCardProps) {
   return (
     <motion.div
       variants={staggerItem}
-      whileHover={hoverLift}
+      whileHover={hoverLift as any}
       className="bg-slate-900 p-8 rounded-xl border border-slate-800 hover:border-teal-500/50 transition-all cursor-pointer"
     >
       <motion.div

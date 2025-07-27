@@ -24,7 +24,7 @@ export default function HomePage(): JSX.Element {
   return (
     <HomeAnimated>
       <Header />
-      <main>
+      <main className="overflow-x-hidden">
         <HeroSection />
         <SocialProof />
         <FeaturesSection />

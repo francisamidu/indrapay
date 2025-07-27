@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { AnimatedFinanceBackground } from "./ui/animated-finance-background";
-import { fadeInUp, staggerContainer, staggerItem } from "../lib/animations";
+import { fadeInUp, staggerContainer, staggerItem } from "@/lib/animations";
 
 const HeroSectionWithBackground = () => {
   return (

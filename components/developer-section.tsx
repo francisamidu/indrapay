@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { ScrollReveal } from "./animated/scroll-reveal";
-import { fadeInLeft, fadeInRight } from "../lib/animations";
+import { fadeInLeft, fadeInRight } from "@/lib/animations";
 import type { JSX } from "react"; // Declare the JSX variable
 import Link from "next/link";
 

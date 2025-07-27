@@ -7,6 +7,8 @@ import Link from "next/link";
 import { Marquee } from "@/components/marquee";
 import { AnimatedCount } from "@/components/animated-count";
 import { Button } from "./ui/button";
+import { useWidth } from "@/hooks/use-width";
+import { useMemo } from "react";
 
 interface Testimonial {
   id: string;
@@ -114,17 +116,11 @@ function StarRating({ rating }: { rating: number }) {
   );
 }
 
-function TestimonialCard({
-  testimonial,
-  index,
-}: {
-  testimonial: Testimonial;
-  index: number;
-}) {
+function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <motion.div
       variants={staggerItem}
-      className="bg-slate-800/50 backdrop-blur-sm p-8 rounded-2xl border border-slate-700/50 hover:border-teal-500/30 transition-all duration-300 h-full flex flex-col min-w-[280px] max-w-lg w-auto"
+      className="bg-slate-800/50 backdrop-blur-sm md:p-8 p-4 rounded-2xl border border-slate-700/50 hover:border-teal-500/30 transition-all duration-300 h-full flex flex-col md:min-w-[280px] md:max-w-lg max-w-[300px] w-fit"
     >
       {/* Rating */}
       <div className="mb-6">
@@ -159,6 +155,14 @@ function TestimonialCard({
 }
 
 export function TestimonialsSection() {
+  const windowWidth = useWidth();
+
+  const buttonText = useMemo(() => {
+    if (windowWidth > 768) {
+      return "Join thousands of satisfied customers";
+    }
+    return "Join happy customers";
+  }, [windowWidth]);
   return (
     <section className="py-20 md:py-28 bg-slate-900 relative overflow-hidden">
       {/* Combined Background: Quotes + Faces */}
@@ -261,7 +265,7 @@ export function TestimonialsSection() {
         />
       </div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto md:px-6 px-2 relative z-10">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <ScrollReveal>
@@ -289,15 +293,15 @@ export function TestimonialsSection() {
           </ScrollReveal>
 
           {/* Testimonials Marquee */}
-          <div className="space-y-10 my-10">
+          <div className="space-y-30 md:space-y-0 my-3 md:my-10">
             {/* Marquee Row 1: right-to-left */}
             <Marquee direction="left">
               {testimonials.concat(testimonials).map((testimonial, i) => (
                 <div
                   key={testimonial.id + "-marquee1-" + i}
-                  className="mx-4 w-96 max-w-full inline-block align-top"
+                  className="md:mx-4 !w-full md:w-96 max-w-full inline-block align-top mb-3 md:mb-0"
                 >
-                  <TestimonialCard testimonial={testimonial} index={i} />
+                  <TestimonialCard testimonial={testimonial} />
                 </div>
               ))}
             </Marquee>
@@ -306,9 +310,9 @@ export function TestimonialsSection() {
               {testimonials.concat(testimonials).map((testimonial, i) => (
                 <div
                   key={testimonial.id + "-marquee2-" + i}
-                  className="mx-4 w-96 max-w-full inline-block align-top"
+                  className="md:mx-4 !w-full md:w-96 max-w-full inline-block align-top mb-3 md:mb-0"
                 >
-                  <TestimonialCard testimonial={testimonial} index={i} />
+                  <TestimonialCard testimonial={testimonial} />
                 </div>
               ))}
             </Marquee>
@@ -373,7 +377,7 @@ export function TestimonialsSection() {
               >
                 <Button asChild>
                   <Link href="/signup">
-                    Join thousands of satisfied customers
+                    {buttonText}
                     <svg
                       className="w-5 h-5 ml-2"
                       fill="none"
