@@ -11,7 +11,7 @@ export function DeveloperSection(): JSX.Element {
   return (
     <section id="developers" className="py-20 md:py-28">
       <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <ScrollReveal variants={fadeInLeft}>
             <div className="pr-0 lg:pr-12">
               <span className="text-teal-400 font-semibold">

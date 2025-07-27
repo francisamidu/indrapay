@@ -278,7 +278,7 @@ export function FinancialPrimitivesSection() {
 
   return (
     <section
-      className="py-20 md:py-28 bg-slate-900 relative overflow-hidden"
+      className="py-20 md:py-28 bg-slate-900 relative overflow-hidden  md:block hidden"
       style={{
         backgroundImage:
           "repeating-linear-gradient(to right, rgba(100,116,139,0.12) 0, rgba(100,116,139,0.12) 1px, transparent 1px, transparent 40px), repeating-linear-gradient(to bottom, rgba(100,116,139,0.12) 0, rgba(100,116,139,0.12) 1px, transparent 1px, transparent 40px)",
