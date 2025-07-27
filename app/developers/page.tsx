@@ -93,7 +93,7 @@ export default function DevelopersPage(): JSX.Element {
         {/* API Overview */}
         <section className="py-20 bg-slate-800/50">
           <div className="container mx-auto px-6">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
                   RESTful API

@@ -18,6 +18,7 @@
 }
 html{
   scroll-behavior: smooth;
+  @apply bg-slate-800/50;
 }
 
 @layer base {

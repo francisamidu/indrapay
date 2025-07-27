@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { AnimatedFinanceBackground } from "./ui/animated-finance-background";
 import { fadeInUp, staggerContainer, staggerItem } from "@/lib/animations";
+import Link from "next/link";
 
 const HeroSectionWithBackground = () => {
   return (
@@ -55,8 +56,9 @@ const HeroSectionWithBackground = () => {
                 className="md:w-fit w-[250px]"
                 variant="default"
                 size="lg"
+                asChild
               >
-                Get Started for Free
+                <Link href="/sign-up">Get Started for Free</Link>
               </Button>
             </motion.div>
             <motion.div

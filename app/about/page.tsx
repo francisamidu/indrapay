@@ -288,16 +288,22 @@ export default function AboutPage(): JSX.Element {
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  className="min-w-[250px]"
                 >
-                  <Button asChild>
+                  <Button asChild className="w-full md:w-fit">
                     <Link href="/careers">View Open Positions</Link>
                   </Button>
                 </motion.div>
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  className="min-w-[250px]"
                 >
-                  <Button asChild variant="secondary">
+                  <Button
+                    asChild
+                    className="w-full md:w-fit"
+                    variant="secondary"
+                  >
                     <Link href="/contact">Get in Touch</Link>
                   </Button>
                 </motion.div>
