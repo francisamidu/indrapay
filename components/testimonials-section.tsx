@@ -120,7 +120,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
     <motion.div
       variants={staggerItem}
-      className="bg-slate-800/50 backdrop-blur-sm md:p-8 p-4 rounded-2xl border border-slate-700/50 hover:border-teal-500/30 transition-all duration-300 h-full flex flex-col md:min-w-[280px] md:max-w-lg max-w-[300px] w-fit"
+      className="bg-slate-800/50 backdrop-blur-sm md:p-8 p-4 rounded-2xl border border-slate-700/50 hover:border-teal-500/30 transition-all duration-300 h-full flex flex-col justify-around min-w-[280px] md:min-w-[360px] md:max-w-lg max-w-[300px] w-fit"
     >
       {/* Rating */}
       <div className="mb-6">
@@ -128,7 +128,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
       </div>
 
       {/* Content */}
-      <blockquote className="text-gray-300 text-lg leading-relaxed mb-8 flex-grow break-words whitespace-normal">
+      <blockquote className="text-gray-300 text-lg leading-relaxed mb-8 break-words whitespace-normal">
         "{testimonial.content}"
       </blockquote>
 
@@ -145,7 +145,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
           <div className="font-semibold text-white">
             {testimonial.author.name}
           </div>
-          <div className="text-gray-400 text-sm">
+          <div className="text-gray-400 text-wrap text-sm">
             {testimonial.author.role} at {testimonial.author.company}
           </div>
         </div>
@@ -293,7 +293,7 @@ export function TestimonialsSection() {
           </ScrollReveal>
 
           {/* Testimonials Marquee */}
-          <div className="space-y-30 md:space-y-0 my-3 md:my-10">
+          <div className="space-y-30 md:space-y-6 my-3 md:my-10">
             {/* Marquee Row 1: right-to-left */}
             <Marquee direction="left">
               {testimonials.concat(testimonials).map((testimonial, i) => (
