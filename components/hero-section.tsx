@@ -7,7 +7,7 @@ import { fadeInUp, staggerContainer, staggerItem } from "../lib/animations";
 
 const HeroSectionWithBackground = () => {
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden">
+    <section className="relative py-16 md:py-32 overflow-hidden">
       {/* Animated Background */}
       <AnimatedFinanceBackground />
 
@@ -46,13 +46,25 @@ const HeroSectionWithBackground = () => {
             variants={staggerItem}
             className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4"
           >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button variant="default" size="lg">
+            <motion.div
+              className="w-full md:w-auto"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                className="md:w-fit w-[250px]"
+                variant="default"
+                size="lg"
+              >
                 Get Started for Free
               </Button>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button variant="outline" size="lg">
+            <motion.div
+              className="w-full md:w-auto"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button className="md-wfit w-[250px]" variant="outline" size="lg">
                 Talk to Sales
               </Button>
             </motion.div>
