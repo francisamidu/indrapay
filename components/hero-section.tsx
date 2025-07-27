@@ -66,8 +66,13 @@ const HeroSectionWithBackground = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Button className="md-wfit w-[250px]" variant="outline" size="lg">
-                Talk to Sales
+              <Button
+                className="md:w-fit w-[250px]"
+                variant="outline"
+                size="lg"
+                asChild
+              >
+                <Link href="/contact">Talk to Sales</Link>
               </Button>
             </motion.div>
           </motion.div>
