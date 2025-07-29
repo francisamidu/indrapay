@@ -3,6 +3,7 @@
 import type React from "react";
 
 import { type JSX, useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { LogoIcon, MenuIcon } from "./icons";
@@ -22,6 +23,7 @@ interface DropdownSection {
 }
 
 export function Header(): JSX.Element {
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isProductsOpen, setIsProductsOpen] = useState<boolean>(false);
   const [isDevelopersOpen, setIsDevelopersOpen] = useState<boolean>(false);
@@ -370,7 +372,13 @@ export function Header(): JSX.Element {
             onMouseEnter={() => setIsProductsOpen(true)}
             onMouseLeave={() => setIsProductsOpen(false)}
           >
-            <button className="flex items-center text-gray-300 hover:text-teal-400 transition-colors">
+            <button
+              className={`flex items-center ${
+                pathname.startsWith("/products")
+                  ? "text-teal-400 font-bold"
+                  : "text-gray-300 hover:text-teal-400"
+              } transition-colors !text-sm`}
+            >
               Products
               <svg
                 className="w-4 h-4 ml-1"
@@ -407,7 +415,11 @@ export function Header(): JSX.Element {
                             <Link
                               key={itemIndex}
                               href={item.href}
-                              className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
+                              className={`flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group ${
+                                pathname.startsWith(item.href)
+                                  ? "text-teal-400 font-bold"
+                                  : "text-gray-300 hover:text-teal-400"
+                              }`}
                             >
                               <div className="flex-shrink-0 w-8 h-8 bg-teal-100 rounded-lg flex items-center justify-center text-teal-600 group-hover:bg-teal-200 transition-colors">
                                 {item.icon}
@@ -462,7 +474,11 @@ export function Header(): JSX.Element {
           >
             <Link
               href="/pricing"
-              className="text-gray-300 hover:text-teal-400 transition-colors"
+              className={`text-gray-300 hover:text-teal-400 transition-colors ${
+                pathname.startsWith("/pricing")
+                  ? "text-teal-400 font-bold"
+                  : "text-gray-300 hover:text-teal-400"
+              } !text-sm`}
             >
               Pricing
             </Link>
@@ -474,7 +490,13 @@ export function Header(): JSX.Element {
             onMouseEnter={() => setIsDevelopersOpen(true)}
             onMouseLeave={() => setIsDevelopersOpen(false)}
           >
-            <button className="flex items-center text-gray-300 hover:text-teal-400 transition-colors">
+            <button
+              className={`flex items-center ${
+                pathname.startsWith("/developers")
+                  ? "text-teal-400 font-bold"
+                  : "text-gray-300 hover:text-teal-400"
+              } transition-colors !text-sm`}
+            >
               Developers
               <svg
                 className="w-4 h-4 ml-1"
@@ -505,7 +527,11 @@ export function Header(): JSX.Element {
                       <Link
                         key={index}
                         href={item.href}
-                        className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
+                        className={`flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group ${
+                          pathname.startsWith(item.href)
+                            ? "text-teal-400 font-bold"
+                            : "text-gray-300 hover:text-teal-400"
+                        }`}
                       >
                         <div className="flex-shrink-0 w-8 h-8 bg-teal-100 rounded-lg flex items-center justify-center text-teal-600 group-hover:bg-teal-200 transition-colors">
                           {item.icon}
@@ -554,7 +580,13 @@ export function Header(): JSX.Element {
             onMouseEnter={() => setIsCompanyOpen(true)}
             onMouseLeave={() => setIsCompanyOpen(false)}
           >
-            <button className="flex items-center text-gray-300 hover:text-teal-400 transition-colors">
+            <button
+              className={`flex items-center ${
+                pathname.startsWith("/company")
+                  ? "text-teal-400 font-bold"
+                  : "text-gray-300 hover:text-teal-400"
+              } transition-colors !text-sm`}
+            >
               Company
               <svg
                 className="w-4 h-4 ml-1"
@@ -585,7 +617,11 @@ export function Header(): JSX.Element {
                       <Link
                         key={index}
                         href={item.href}
-                        className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group"
+                        className={`flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group ${
+                          pathname.startsWith(item.href)
+                            ? "text-teal-400 font-bold"
+                            : "text-gray-300 hover:text-teal-400"
+                        }`}
                       >
                         <div className="flex-shrink-0 w-8 h-8 bg-teal-100 rounded-lg flex items-center justify-center text-teal-600 group-hover:bg-teal-200 transition-colors">
                           {item.icon}
@@ -675,21 +711,23 @@ export function Header(): JSX.Element {
               { href: "/pricing", label: "Pricing" },
               { href: "/developers", label: "Developers" },
               { href: "/about", label: "Company" },
-            ].map((item, index) => (
-              <motion.div
-                key={item.href}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Link
-                  href={item.href}
-                  className="block text-gray-300 hover:text-teal-400 transition-colors"
+            ].map((item, index) => {
+              return (
+                <motion.div
+                  key={item.href}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
                 >
-                  {item.label}
-                </Link>
-              </motion.div>
-            ))}
+                  <Link
+                    href={item.href}
+                    className={`block transition-colors text-gray-300 hover:text-teal-400`}
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
+              );
+            })}
             <motion.div
               className="border-t border-slate-700 pt-4 space-y-4"
               initial={{ opacity: 0 }}
