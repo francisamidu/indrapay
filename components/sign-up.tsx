@@ -1,8 +1,6 @@
 "use client";
-import React, { JSX, useState } from "react";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
 import { CheckIcon } from "@/components/icons";
 import { ScrollReveal } from "@/components/animated/scroll-reveal";
 import {
@@ -19,12 +17,7 @@ import { Label } from "@/components/ui/label";
 
 import { useActionState } from "react";
 import { initialFormState } from "@tanstack/react-form/nextjs";
-import {
-  mergeForm,
-  useForm,
-  useStore,
-  useTransform,
-} from "@tanstack/react-form";
+import { mergeForm, useForm, useTransform } from "@tanstack/react-form";
 import signInAction from "@/lib/action";
 import { formOpts } from "@/lib/shared-code";
 
@@ -54,7 +47,6 @@ export const SignUp = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Header />
       <main className="py-20">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
@@ -337,7 +329,6 @@ export const SignUp = () => {
           </div>
         </div>
       </main>
-      <Footer />
     </motion.div>
   );
 };

@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
-import { Header } from "./header";
 import { motion, AnimatePresence } from "framer-motion";
-import { Footer } from "@/components/footer";
 import { ScrollReveal } from "@/components/animated/scroll-reveal";
 import {
   fadeInLeft,
@@ -52,7 +50,6 @@ export const SignIn = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Header />
       <main className="py-20">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
@@ -334,7 +331,6 @@ export const SignIn = () => {
           </div>
         </div>
       </main>
-      <Footer />
     </motion.div>
   );
 };

@@ -34,7 +34,7 @@ export function Header(): JSX.Element {
         {
           title: "Cross-Border Payments",
           description: "Send money globally with competitive rates",
-          href: "/products/cross-border",
+          href: "/products/cross-border-payments",
           icon: (
             <svg
               className="w-5 h-5"
@@ -54,7 +54,7 @@ export function Header(): JSX.Element {
         {
           title: "Multi-Currency Wallets",
           description: "Hold and manage 50+ currencies",
-          href: "/products/wallets",
+          href: "/products/multi-currency-wallets",
           icon: (
             <svg
               className="w-5 h-5"
@@ -71,7 +71,7 @@ export function Header(): JSX.Element {
         {
           title: "Local Payment Methods",
           description: "Accept UPI, Alipay, SEPA, and more",
-          href: "/products/local-payments",
+          href: "/products/local-payment-methods",
           icon: (
             <svg
               className="w-5 h-5"
@@ -91,7 +91,7 @@ export function Header(): JSX.Element {
         {
           title: "FX & Currency Exchange",
           description: "Real-time rates and instant conversion",
-          href: "/products/fx",
+          href: "/products/fx-currency-exchange",
           icon: (
             <svg
               className="w-5 h-5"
@@ -116,7 +116,7 @@ export function Header(): JSX.Element {
         {
           title: "Global Businesses",
           description: "Enterprise payment infrastructure",
-          href: "/products/global-businesses",
+          href: "#",
           icon: (
             <svg
               className="w-5 h-5"
@@ -136,7 +136,7 @@ export function Header(): JSX.Element {
         {
           title: "Fintech Platforms",
           description: "White-label payment solutions",
-          href: "/products/fintech",
+          href: "#",
           icon: (
             <svg
               className="w-5 h-5"
@@ -156,7 +156,7 @@ export function Header(): JSX.Element {
         {
           title: "Marketplaces",
           description: "Split payments and escrow services",
-          href: "/products/marketplaces",
+          href: "#",
           icon: (
             <svg
               className="w-5 h-5"
@@ -176,7 +176,7 @@ export function Header(): JSX.Element {
         {
           title: "Digital Banks",
           description: "Banking-as-a-Service infrastructure",
-          href: "/products/digital-banks",
+          href: "#",
           icon: (
             <svg
               className="w-5 h-5"
@@ -201,7 +201,7 @@ export function Header(): JSX.Element {
     {
       title: "API Documentation",
       description: "Comprehensive guides and references",
-      href: "/docs",
+      href: "/developers/api-documentation",
       icon: (
         <svg
           className="w-5 h-5"
@@ -221,7 +221,7 @@ export function Header(): JSX.Element {
     {
       title: "SDKs & Libraries",
       description: "Official libraries for popular languages",
-      href: "/developers/sdks",
+      href: "/developers/sdk-libraries",
       icon: (
         <svg
           className="w-5 h-5"
@@ -284,7 +284,7 @@ export function Header(): JSX.Element {
     {
       title: "Careers",
       description: "Join our team and build the future",
-      href: "/careers",
+      href: "company/careers",
       icon: (
         <svg
           className="w-5 h-5"
@@ -304,7 +304,7 @@ export function Header(): JSX.Element {
     {
       title: "News & Press",
       description: "Latest updates and announcements",
-      href: "/news",
+      href: "company/news",
       icon: (
         <svg
           className="w-5 h-5"
@@ -399,7 +399,7 @@ export function Header(): JSX.Element {
                   <div className="grid grid-cols-2 gap-8">
                     {productsDropdown.map((section, sectionIndex) => (
                       <div key={sectionIndex}>
-                        <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
+                        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">
                           {section.title}
                         </h3>
                         <div className="space-y-3">

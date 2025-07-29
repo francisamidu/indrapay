@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Fira_Code, Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
+import { HomeAnimated } from "@/components/animated/home-animated";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,7 +42,13 @@ export default function RootLayout({
       suppressHydrationWarning
       className={` ${inter.variable} ${plusJakartaSans.variable} ${firaCode.variable}`}
     >
-      <body className="font-inter overflow-x-hidden">{children}</body>
+      <body className="font-inter overflow-x-hidden">
+        <HomeAnimated>
+          <Header />
+          {children}
+          <Footer />
+        </HomeAnimated>
+      </body>
     </html>
   );
 }
