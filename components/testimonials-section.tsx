@@ -305,17 +305,6 @@ export function TestimonialsSection() {
                 </div>
               ))}
             </Marquee>
-            {/* Marquee Row 2: left-to-right */}
-            <Marquee direction="right">
-              {testimonials.concat(testimonials).map((testimonial, i) => (
-                <div
-                  key={testimonial.id + "-marquee2-" + i}
-                  className="md:mx-4 !w-full md:w-96 max-w-full inline-block align-top mb-3 md:mb-0"
-                >
-                  <TestimonialCard testimonial={testimonial} />
-                </div>
-              ))}
-            </Marquee>
           </div>
 
           {/* Stats Section */}

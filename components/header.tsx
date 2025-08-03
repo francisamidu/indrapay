@@ -72,7 +72,7 @@ export function Header(): JSX.Element {
         },
         {
           title: "Local Payment Methods",
-          description: "Accept UPI, Alipay, SEPA, and more",
+          description: "Accept M-Pesa, Airtel Money, SEPA, and more",
           href: "/products/local-payment-methods",
           icon: (
             <svg

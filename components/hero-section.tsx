@@ -5,7 +5,6 @@ import { Button } from "./ui/button";
 import { AnimatedFinanceBackground } from "./ui/animated-finance-background";
 import { fadeInUp, staggerContainer, staggerItem } from "@/lib/animations";
 import Link from "next/link";
-import { AnimatedHeading } from "./animated-heading";
 
 const HeroSectionWithBackground = () => {
   return (
@@ -21,7 +20,19 @@ const HeroSectionWithBackground = () => {
           animate="visible"
           className="space-y-6"
         >
-          <AnimatedHeading />
+          <motion.h1
+            variants={fadeInUp}
+            className="text-4xl md:text-6xl font-extrabold text-white leading-tight"
+          >
+            Connecting Your Business to the World with
+            <motion.span
+              className="bg-gradient-to-r from-teal-400 to-blue-500 text-transparent bg-clip-text"
+              variants={staggerItem}
+            >
+              {" "}
+              Seamless Payments
+            </motion.span>
+          </motion.h1>
 
           <motion.p
             variants={staggerItem}
