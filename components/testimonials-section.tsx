@@ -294,7 +294,6 @@ export function TestimonialsSection() {
 
           {/* Testimonials Marquee */}
           <div className="space-y-30 md:space-y-6 my-3 md:my-10">
-            {/* Marquee Row 1: right-to-left */}
             <Marquee direction="left">
               {testimonials.concat(testimonials).map((testimonial, i) => (
                 <div
