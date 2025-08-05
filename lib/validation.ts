@@ -1,5 +1,11 @@
 import { z } from "zod";
 
+export const emailSchema = z
+  .string()
+  .min(1, { message: "Email is required" })
+  .email({ message: "Invalid email address" })
+  .max(100, { message: "Email must be less than 100 characters" });
+
 export const passwordSchema = z
   .string()
   .min(8, { message: "Password needs to be a least 8 characters long" })
@@ -18,10 +24,7 @@ export const passwordSchema = z
   });
 
 export const LoginSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: "Email is required" })
-    .email({ message: "Invalid email address" }),
+  email: emailSchema,
 
   password: passwordSchema,
 });
@@ -29,23 +32,12 @@ export const LoginSchema = z.object({
 export type LoginSchemaType = z.infer<typeof LoginSchema>;
 
 export const SignupSchema = z.object({
-  email: z
-    .string()
-    .min(1, { message: "Email is required" })
-    .email({ message: "Invalid email address" })
-    .max(100, { message: "Email must be less than 100 characters" }),
+  agreeToTerms: z.boolean().refine((value) => value, {
+    message: "You must agree to the terms and conditions",
+  }),
+  email: emailSchema,
 
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters long" })
-    .max(64, { message: "Password must be less than 64 characters" })
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      {
-        message:
-          "Password must include uppercase, lowercase, number, and special character",
-      }
-    ),
+  password: passwordSchema,
 });
 
 // Type inference for TypeScript
@@ -59,4 +51,5 @@ export const initialLoginFormState = {
 export const initialSignupFormState: SignupSchemaType = {
   email: "",
   password: "",
+  agreeToTerms: false,
 };

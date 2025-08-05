@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollReveal } from "@/components/animated/scroll-reveal";
 import {
@@ -24,6 +24,10 @@ import {
 } from "@tanstack/react-form";
 import signInAction from "@/lib/action";
 import { formOpts } from "@/lib/shared-code";
+import { useMutation } from "@tanstack/react-query";
+import { signInWithEmail, signInWithOAuth } from "@/lib/api";
+import { emailSchema, passwordSchema } from "@/lib/validation";
+import { toast } from "sonner";
 
 export const SignIn = () => {
   const features = [
@@ -35,14 +39,37 @@ export const SignIn = () => {
     "Real-time analytics dashboard",
   ];
   const [state, action] = useActionState(signInAction, initialFormState);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const form = useForm({
     ...formOpts,
     transform: useTransform((baseForm) => mergeForm(baseForm, state!), [state]),
   });
+  const {
+    state: {
+      values: { email, password },
+    },
+  } = form;
   const handleSocialSignin = (provider: string) => {
     console.log(provider);
   };
+
+  const { mutate: mutateSignin } = useMutation({
+    mutationKey: ["email", "password"],
+    mutationFn: () => signInWithEmail(email, password),
+    onMutate: () => {
+      setIsSubmitting(true);
+    },
+    onSuccess: () => {
+      setIsSubmitting(false);
+      toast.success("Sign in successful");
+    },
+    onError: (e) => {
+      toast.error(e?.message);
+      setIsSubmitting(false);
+    },
+  });
+
   return (
     <motion.div
       className="bg-dotted text-gray-300 antialiased min-h-screen"
@@ -168,8 +195,10 @@ export const SignIn = () => {
 
                 {/* Email Signin Form */}
                 <form
-                  action={action as never}
-                  onSubmit={() => form.handleSubmit()}
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    mutateSignin();
+                  }}
                   className="space-y-4"
                 >
                   {/* {formErrors.map((error) => (
@@ -179,10 +208,7 @@ export const SignIn = () => {
                   <form.Field
                     name="email"
                     validators={{
-                      onChange: ({ value }) =>
-                        value
-                          ? "Client validation: Email is required"
-                          : undefined,
+                      onChange: emailSchema,
                     }}
                   >
                     {(field) => {
@@ -203,20 +229,22 @@ export const SignIn = () => {
                             onChange={(e) => field.handleChange(e.target.value)}
                             className={`w-full px-4 py-3 bg-slate-700 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-teal-500 transition-colors ${
                               field.state.meta.isDirty &&
-                              field.state.meta.errors
+                              field.state.meta.errors[1]
                                 ? "border-red-500"
+                                : field.state.meta.isValid
+                                ? "border-green-500"
                                 : "border-slate-600"
                             }`}
                           />
                           <AnimatePresence>
-                            {field.state.meta.errors && (
+                            {field.state.meta.errors[1] && (
                               <motion.p
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 className="text-red-400 text-sm mt-1"
                               >
-                                {field.state.meta.errors}
+                                {field.state.meta.errors[1].message}
                               </motion.p>
                             )}
                           </AnimatePresence>
@@ -228,10 +256,7 @@ export const SignIn = () => {
                   <form.Field
                     name="password"
                     validators={{
-                      onChange: ({ value }) =>
-                        value
-                          ? "Client validation: Email is required"
-                          : undefined,
+                      onChange: passwordSchema,
                     }}
                   >
                     {(field) => {
@@ -252,20 +277,22 @@ export const SignIn = () => {
                             onChange={(e) => field.handleChange(e.target.value)}
                             className={`w-full px-4 py-3 bg-slate-700 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-teal-500 transition-colors ${
                               field.state.meta.isDirty &&
-                              field.state.meta.errors
+                              field.state.meta.errors[1]
                                 ? "border-red-500"
+                                : field.state.meta.isValid
+                                ? "border-green-500"
                                 : "border-slate-600"
                             }`}
                           />
                           <AnimatePresence>
-                            {field.state.meta.errors && (
+                            {field.state.meta.errors[1] && (
                               <motion.p
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 className="text-red-400 text-sm mt-1"
                               >
-                                {field.state.meta.errors}
+                                {field.state.meta.errors[1].message}
                               </motion.p>
                             )}
                           </AnimatePresence>
@@ -291,7 +318,7 @@ export const SignIn = () => {
                           className="w-full disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           <AnimatePresence mode="wait">
-                            {field.state.meta.isValid ? (
+                            {field.state.meta.isValid && isSubmitting ? (
                               <motion.span
                                 key="submitting"
                                 initial={{ opacity: 0 }}

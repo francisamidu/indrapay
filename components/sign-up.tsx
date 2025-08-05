@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckIcon } from "@/components/icons";
 import { ScrollReveal } from "@/components/animated/scroll-reveal";
@@ -20,8 +20,15 @@ import { initialFormState } from "@tanstack/react-form/nextjs";
 import { mergeForm, useForm, useTransform } from "@tanstack/react-form";
 import signInAction from "@/lib/action";
 import { formOpts } from "@/lib/shared-code";
+import { useMutation } from "@tanstack/react-query";
+import { signInWithOAuth, signUpUser } from "@/lib/api";
+import { emailSchema, passwordSchema, SignupSchema } from "@/lib/validation";
+import { toast } from "sonner";
 
 export const SignUp = () => {
+  const [provider, setProvider] = useState<string>("");
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
   const benefits = [
     "Accept payments in 50+ countries",
     "No setup or monthly fees",
@@ -30,15 +37,49 @@ export const SignUp = () => {
     "Advanced fraud protection",
     "Real-time analytics dashboard",
   ];
-  const [state, action] = useActionState(signInAction, initialFormState);
+  const [state, _] = useActionState(signInAction, initialFormState);
 
   const form = useForm({
     ...formOpts,
     transform: useTransform((baseForm) => mergeForm(baseForm, state!), [state]),
   });
 
+  const {
+    state: {
+      values: { email, password },
+    },
+  } = form;
+  const { mutate: mutateSignup } = useMutation({
+    mutationKey: ["email", "password"],
+    mutationFn: () => signUpUser(email, password),
+    onMutate: () => {
+      setIsSubmitting(true);
+    },
+    onSuccess: () => {
+      setIsSubmitting(false);
+      toast.success("Sign up successful");
+    },
+    onError: (e) => {
+      toast.error(e?.message);
+      setIsSubmitting(false);
+    },
+  });
+
+  const { mutate: mutateSocialSignup } = useMutation({
+    mutationKey: ["provider"],
+    mutationFn: () => signInWithOAuth(provider),
+
+    onSuccess: () => {
+      toast.success("Sign up successful");
+    },
+    onError: () => {
+      toast.error("Sign up failed");
+    },
+  });
+
   const handleSocialSignup = (provider: string) => {
-    console.log(provider);
+    setProvider(provider);
+    mutateSocialSignup(provider);
   };
   return (
     <motion.div
@@ -131,17 +172,16 @@ export const SignUp = () => {
 
                 {/* Email Signup Form */}
                 <form
-                  action={action as never}
-                  onSubmit={() => form.handleSubmit()}
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    mutateSignup();
+                  }}
                   className="space-y-4"
                 >
                   <form.Field
                     name="email"
                     validators={{
-                      onChange: ({ value }) =>
-                        value
-                          ? "Client validation: Email is required"
-                          : undefined,
+                      onChange: emailSchema,
                     }}
                   >
                     {(field) => {
@@ -159,23 +199,26 @@ export const SignUp = () => {
                             name="email"
                             placeholder="name@company.com"
                             value={field.state.value}
-                            onChange={(e) => field.handleChange(e.target.value)}
-                            className={`w-full px-4 py-3 bg-slate-700 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-teal-500 transition-colors ${
+                            onChange={(e) => {
+                              field.handleChange(e.target.value);
+                              console.log(field.state.meta.errors);
+                            }}
+                            className={`w-full px-4 py-3 bg-slate-700 border rounded-lg text-white placeholder-gray-400 focus:outline-none transition-colors ${
                               field.state.meta.isDirty &&
-                              field.state.meta.errors
+                              field.state.meta.errors[0]
                                 ? "border-red-500"
-                                : "border-slate-600"
+                                : "border-green-600"
                             }`}
                           />
                           <AnimatePresence>
-                            {field.state.meta.errors && (
+                            {field.state.meta.errors[2] && (
                               <motion.p
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 className="text-red-400 text-sm mt-1"
                               >
-                                {field.state.meta.errors}
+                                You must accept the terms and conditions
                               </motion.p>
                             )}
                           </AnimatePresence>
@@ -187,10 +230,7 @@ export const SignUp = () => {
                   <form.Field
                     name="password"
                     validators={{
-                      onChange: ({ value }) =>
-                        value
-                          ? "Client validation: Email is required"
-                          : undefined,
+                      onChange: passwordSchema,
                     }}
                   >
                     {(field) => {
@@ -209,22 +249,24 @@ export const SignUp = () => {
                             placeholder="Enter your password"
                             value={field.state.value}
                             onChange={(e) => field.handleChange(e.target.value)}
-                            className={`w-full px-4 py-3 bg-slate-700 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-teal-500 transition-colors ${
+                            className={`w-full px-4 py-3 bg-slate-700 border rounded-lg text-white placeholder-gray-400 focus:outline-none transition-colors ${
                               field.state.meta.isDirty &&
-                              field.state.meta.errors
+                              field.state.meta.errors[1]
                                 ? "border-red-500"
-                                : "border-slate-600"
+                                : "border-green-600"
                             }`}
                           />
                           <AnimatePresence>
-                            {field.state.meta.errors && (
+                            {field.state.meta.errors[1] && (
                               <motion.p
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 className="text-red-400 text-sm mt-1"
                               >
-                                {field.state.meta.errors}
+                                Password must include uppercase, lowercase,
+                                number, and special character at least 8
+                                characters long
                               </motion.p>
                             )}
                           </AnimatePresence>
@@ -289,7 +331,7 @@ export const SignUp = () => {
                           className="w-full disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           <AnimatePresence mode="wait">
-                            {field.state.meta.isValid ? (
+                            {field.state.meta.isValid && isSubmitting ? (
                               <motion.span
                                 key="submitting"
                                 initial={{ opacity: 0 }}

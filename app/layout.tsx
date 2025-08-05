@@ -4,6 +4,8 @@ import { Fira_Code, Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { HomeAnimated } from "@/components/animated/home-animated";
+import Providers from "./providers";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -43,11 +45,24 @@ export default function RootLayout({
       className={` ${inter.variable} ${plusJakartaSans.variable} ${firaCode.variable}`}
     >
       <body className="font-inter overflow-x-hidden">
-        <HomeAnimated>
-          <Header />
-          {children}
-          <Footer />
-        </HomeAnimated>
+        <Providers>
+          <Toaster
+            toastOptions={{
+              classNames: {
+                error: "!text-red-900",
+                success: "!text-green-900",
+                info: "!text-blue-900",
+                warning: "!text-yellow-900",
+              },
+            }}
+            position="top-right"
+          />
+          <HomeAnimated>
+            <Header />
+            {children}
+            <Footer />
+          </HomeAnimated>
+        </Providers>
       </body>
     </html>
   );
